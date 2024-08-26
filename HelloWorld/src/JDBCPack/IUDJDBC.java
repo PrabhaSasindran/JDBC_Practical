@@ -75,6 +75,6 @@ public class IUDJDBC {
         System.out.println("Enter the name");
         String name = sc.nextLine();
         String sql = "Select * from sample where name='"+name+"'";
-        ResultSet rs = stmt.executeQuery(sql)
+        ResultSet rs = stmt.executeQuery(sql);
     }
 }
