@@ -3,7 +3,7 @@ package JDBCPack;
 import java.sql.*;
 import java.util.Scanner;
 
-public class IUDJDBC {
+public class InsetUpdateDeleteFetchJDBC {
     public static void main(String[] args){
         Connection con = null;
         String url = "jdbc:mysql://localhost:3306/scott";
@@ -11,20 +11,20 @@ public class IUDJDBC {
         String passWord = "prabhasasindran123";
         try {
             Scanner sc = new Scanner(System.in);
-            boolean lol = true;
+            boolean operation = true;
             con = DriverManager.getConnection(url,userName,passWord);
             Statement stmt = con.createStatement();
-            while(lol)
+            while(operation)
             {
                 System.out.println("Press 1 for Update");
                 System.out.println("Press 2 for Delete");
                 System.out.println("Press 3 for Insert");
-                System.out.println("Press 4 for Cancel");
-                System.out.println("Press 5 for reading data");
+                System.out.println("Press 4 for fetching data");
+                System.out.println("Press 5 for Cancel");
                 System.out.println();
                 System.out.println("++++++++++++++++++++++ +++++++++++++++++++++++++++");
                 System.out.println();
-                System.out.println("Pls Enter u r choice");
+                System.out.println("Please enter your choice");
                 int a = sc.nextInt();
                 sc.nextLine();
                 switch (a)
@@ -38,7 +38,10 @@ public class IUDJDBC {
                     case 3:insert(stmt,sc);
                     break;
 
-                    case 4:lol=false;
+                    case 4:Fetch(stmt,sc);
+                    break;
+
+                    case 5:operation=false;
                     break;
 
                 }
@@ -71,10 +74,16 @@ public class IUDJDBC {
         String sql = "Delete from sample where name ='"+name+"'";
         stmt.execute(sql);
     }
-    public static void Read(Statement stmt,Scanner sc){
+    public static void Fetch(Statement stmt,Scanner sc) throws SQLException {
         System.out.println("Enter the name");
         String name = sc.nextLine();
         String sql = "Select * from sample where name='"+name+"'";
         ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()){
+            String name1 = rs.getString("name");
+            String location = rs.getString("city");
+            System.out.println("name " + name1);
+            System.out.println("city " + location);
+        }
     }
 }
